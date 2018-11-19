@@ -1,85 +1,51 @@
 const jsonObject = require("./1.json");
-let wrongParameters;
-let areAllConditionsTrue = true;
+const fs = require("fs");
+
+const fileName = "incorrectParams.json";
+let incorrectParams;
 
 function compareObject(objectForComparsion) {
-	wrongParameters = {};
-	if (typeof objectForComparsion.flag === "boolean") {
-
+	incorrectParams = {};
+	if (typeof objectForComparsion.flag !== "boolean") {
+		writeIncorrectParameter("flag", objectForComparsion.flag);
 	}
-	else {
-		wrongParameters.flag = objectForComparsion.flag;
-		areAllConditionsTrue = false;
+	if (!Array.isArray(objectForComparsion.myPromises)) {
+		writeIncorrectParameter("myPromises", objectForComparsion.myPromises);
 	}
-	if (Array.isArray(objectForComparsion.myPromises)) {
-
+	if (typeof objectForComparsion.element !== Object) {
+		writeIncorrectParameter("element", objectForComparsion.element);
 	}
-	else {
-		wrongParameters.myPromises = objectForComparsion.myPromises;
-		areAllConditionsTrue = false;
+	if (typeof objectForComparsion.screenshot !== null) {
+		writeIncorrectParameter("screenshot", objectForComparsion.screenshot);
 	}
-	if (typeof objectForComparsion.element === Object) {
-
+	if (typeof objectForComparsion.elementText !== "string") {
+		writeIncorrectParameter("elementText", objectForComparsion.elementText);
 	}
-	else {
-		wrongParameters.element = objectForComparsion.element;
-		areAllConditionsTrue = false;
+	if (typeof objectForComparsion.allElementsText !== "string" || !objectForComparsion.allElementsText.includes("const")) {
+		writeIncorrectParameter("allElementsText", objectForComparsion.allElementsText);
 	}
-	if (typeof objectForComparsion.screenshot === null) {
-
+	if (objectForComparsion.counter <= 10) {
+		writeIncorrectParameter("counter", objectForComparsion.counter);
 	}
-	else {
-		wrongParameters.screenshot = objectForComparsion.screenshot;
-		areAllConditionsTrue = false;
+	if (objectForComparsion.config !== "Common") {
+		writeIncorrectParameter("config", objectForComparsion.config);
 	}
-	if (typeof objectForComparsion.elementText === "string") {
+	if (object = objectForComparsion.const.toLowerCase() !== "FiRst".toLowerCase()) {
+		writeIncorrectParameter("const", objectForComparsion.const);
 	}
-	else {
-		console.log(typeof objectForComparsion.elementText)
-		wrongParameters.elementText = objectForComparsion.elementText;
-		areAllConditionsTrue = false;
+	if ((objectForComparsion.parameters).length !== 8) {
+		writeIncorrectParameter("parameters", objectForComparsion.parameters);
 	}
-	if (objectForComparsion.allElementsText) {
+	if (objectForComparsion.description.length <= 5 && objectForComparsion.description.length >= 13) {
+		writeIncorrectParameter("description", objectForComparsion.description);
 	}
-	else {
-		wrongParameters.allElementsText = objectForComparsion.allElementsText;
-		areAllConditionsTrue = false;
-	}
-	if (objectForComparsion.counter > 10) { }
-	else {
-		wrongParameters.counter = objectForComparsion.counter;
-		areAllConditionsTrue = false;
-	}
-	if (objectForComparsion.config === "Common") {
-	}
-	else {
-		wrongParameters.config = objectForComparsion.config;
-		areAllConditionsTrue = false;
-	}
-	if (objectForComparsion.const.toLowerCase() === "FiRst".toLowerCase()) {
-
-	}
-	else {
-		wrongParameters.const = objectForComparsion.const;
-		areAllConditionsTrue = false;
-	}
-
-	if ((objectForComparsion.parameters).length === 8) {
-	}
-
-	else {
-		wrongParameters.parameters = objectForComparsion.parameters;
-		areAllConditionsTrue = false;
-	}
-	if (objectForComparsion.description.length > 5 && objectForComparsion.description.length < 13) {
-	}
-	else {
-		wrongParameters.C = objectForComparsion.C;
-		areAllConditionsTrue = false;
-	}
-	(areAllConditionsTrue === false) ? console.log(wrongParameters) : console.log("Ok");
+	(incorrectParams.length !== 0) ? fs.writeFile(fileName, JSON.stringify(incorrectParams), "utf8", () => {
+		console.log(fileName + "successfully created");
+	}) : console.log("OK");
 }
 
+function writeIncorrectParameter(key, value) {
+	incorrectParams[key] = value;
+}
 compareObject(jsonObject);
-
-
+//@TODO make checkforfileispresent function
