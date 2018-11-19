@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const jsonObject = require("./1.json");
 const fs = require("fs");
 
@@ -15,7 +16,7 @@ function compareObject(objectForComparsion) {
 	if (typeof objectForComparsion.element !== Object) {
 		writeIncorrectParameter("element", objectForComparsion.element);
 	}
-	if (typeof objectForComparsion.screenshot !== null) {
+	if (objectForComparsion.screenshot !== null) {
 		writeIncorrectParameter("screenshot", objectForComparsion.screenshot);
 	}
 	if (typeof objectForComparsion.elementText !== "string") {
@@ -30,7 +31,7 @@ function compareObject(objectForComparsion) {
 	if (objectForComparsion.config !== "Common") {
 		writeIncorrectParameter("config", objectForComparsion.config);
 	}
-	if (object = objectForComparsion.const.toLowerCase() !== "FiRst".toLowerCase()) {
+	if (objectForComparsion.const.toLowerCase() !== "FiRst".toLowerCase()) {
 		writeIncorrectParameter("const", objectForComparsion.const);
 	}
 	if ((objectForComparsion.parameters).length !== 8) {
@@ -48,4 +49,3 @@ function writeIncorrectParameter(key, value) {
 	incorrectParams[key] = value;
 }
 compareObject(jsonObject);
-//@TODO make checkforfileispresent function
